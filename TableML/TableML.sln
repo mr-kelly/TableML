@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TableML", "TableML\TableML.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TableMLTests", "TableMLTests\TableMLTests.csproj", "{164B3B58-390D-4913-8A34-4A1A069B526A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TableMLCompiler", "TableMLCompiler\TableMLCompiler.csproj", "{0EA0F262-7EF3-4696-A99C-F62E0BC2F613}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{164B3B58-390D-4913-8A34-4A1A069B526A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{164B3B58-390D-4913-8A34-4A1A069B526A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{164B3B58-390D-4913-8A34-4A1A069B526A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EA0F262-7EF3-4696-A99C-F62E0BC2F613}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EA0F262-7EF3-4696-A99C-F62E0BC2F613}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EA0F262-7EF3-4696-A99C-F62E0BC2F613}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EA0F262-7EF3-4696-A99C-F62E0BC2F613}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
