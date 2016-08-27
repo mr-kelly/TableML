@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Text;
 using CommandLine;
 using CommandLine.Text;
+using TableML.Compiler;
 
 namespace TableCompilerConsole
 {
@@ -31,6 +31,10 @@ namespace TableCompilerConsole
 			{
 				// Values are available here
 				if (options.Verbose) Console.WriteLine("Filename: {0}", options.InputFile);
+
+				var compiler = new Compiler();
+				var result = compiler.Compile(options.InputFile);
+				Console.WriteLine(string.Format("Compile excel file: {0} , to {1}", options.InputFile, result.TabFilePath));
 			}
 		}
 	}

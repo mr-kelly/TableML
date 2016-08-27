@@ -36,7 +36,7 @@ int	string
         [Test]
         public void TestLoad()
         {
-            var table = TableFile.LoadFromString(TableString1, TableString2);
+            var table = TableML.TableFile.LoadFromString(TableString1, TableString2);
             var row = table.GetByPrimaryKey("1");
             Assert.AreEqual("hi", row["Value"]);
         }

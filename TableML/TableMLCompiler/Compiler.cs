@@ -309,6 +309,16 @@ namespace TableML.Compiler
             return CellType.Value;
         }
 
+		/// <summary>
+		/// Compile the specified path, auto change extension to config `ExportTabExt`
+		/// </summary>
+		/// <param name="path">Path.</param>
+		public TableCompileResult Compile(string path)
+		{
+			var outputPath = System.IO.Path.ChangeExtension(path, this._config.ExportTabExt);
+			return Compile(path, outputPath);
+		}
+
         /// <summary>
         /// Compile a setting file, return a hash for template
         /// </summary>
@@ -317,9 +327,10 @@ namespace TableML.Compiler
         /// <param name="compileBaseDir"></param>
         /// <param name="doRealCompile">Real do, or just get the template var?</param>
         /// <returns></returns>
-        public TableCompileResult Compile(string path, string compileToFilePath = null, string compileBaseDir = null, bool doRealCompile = true)
+        public TableCompileResult Compile(string path, string compileToFilePath, string compileBaseDir = null, bool doRealCompile = true)
         {
-            // 确保目录存在
+			// 确保目录存在
+			compileToFilePath = Path.GetFullPath(compileToFilePath);
             var compileToFileDirPath = Path.GetDirectoryName(compileToFilePath);
 
             if (!Directory.Exists(compileToFileDirPath))
