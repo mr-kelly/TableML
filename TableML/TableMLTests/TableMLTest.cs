@@ -71,10 +71,17 @@ int	string
         }
 
 		[Test]
-		public void TestCompile()
+		public void TestCompileXls()
 		{
 			var compiler = new Compiler();
-			compiler.Compile("TestExcel.xlsx", Path.GetFullPath("./"), Path.GetFullPath("./"));
+			compiler.Compile("TestExcel.xls", Path.GetFullPath("./TestExcelXls.txt"), Path.GetFullPath("./"));
+
+		}
+		[Test]
+		public void TestCompileXlsx()
+		{
+			var compiler = new Compiler();
+			compiler.Compile("TestExcel.xlsx", Path.GetFullPath("./TestExcelXlsx.txt"), Path.GetFullPath("./"));
 
 		}
     }
