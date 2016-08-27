@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using TableML;
 using NUnit.Framework;
+using TableML.Compiler;
 
 namespace TableMLTests
 {
@@ -68,5 +69,13 @@ int	string
             Assert.AreEqual(expect, result);
 
         }
+
+		[Test]
+		public void TestCompile()
+		{
+			var compiler = new Compiler();
+			compiler.Compile("TestExcel.xlsx", Path.GetFullPath("./"), Path.GetFullPath("./"));
+
+		}
     }
 }

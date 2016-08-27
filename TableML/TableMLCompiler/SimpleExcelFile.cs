@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
-using TableML;
 using NPOI.SS.UserModel;
 
 namespace TableML.Compiler
