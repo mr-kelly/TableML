@@ -74,14 +74,16 @@ int	string
 		public void TestCompileXls()
 		{
 			var compiler = new Compiler();
-			compiler.Compile("TestExcel.xls", Path.GetFullPath("./TestExcelXls.txt"), Path.GetFullPath("./"));
+			compiler.Compile("TestExcel.xls", Path.GetFullPath("./TestExcelXls.tml"), Path.GetFullPath("./"));
+		    Assert.True(File.Exists("TestExcelXls.tml"));
 
 		}
 		[Test]
 		public void TestCompileXlsx()
 		{
 			var compiler = new Compiler();
-			compiler.Compile("TestExcel.xlsx", Path.GetFullPath("./TestExcelXlsx.txt"), Path.GetFullPath("./"));
+			compiler.Compile("TestExcel.xlsx", Path.GetFullPath("./TestExcelXlsx.tml"), Path.GetFullPath("./"));
+		    Assert.True(File.Exists("TestExcelXlsx.tml"));
 
 		}
 
