@@ -85,7 +85,6 @@ namespace TableML
         public new static TableFile LoadFromFile(string fileFullPath, Encoding encoding = null)
         {
             return new TableFile(fileFullPath, encoding);
-
         }
     }
 

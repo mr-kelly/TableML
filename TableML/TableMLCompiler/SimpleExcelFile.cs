@@ -99,7 +99,7 @@ namespace TableML.Compiler
         private string Path;
         private IWorkbook Workbook;
         private ISheet Worksheet;
-        private TableFile _tableFile;
+        //private TableFile _tableFile;
         //public bool IsLoadSuccess = true;
         private int _columnCount;
 

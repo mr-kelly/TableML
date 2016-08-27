@@ -1,4 +1,4 @@
-﻿namespace TableMLCompiler
+namespace TableMLCompiler
 {
     public class CompilerConfig
     {
