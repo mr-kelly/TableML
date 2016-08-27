@@ -74,15 +74,32 @@ int	string
 		public void TestCompileXls()
 		{
 			var compiler = new Compiler();
-			compiler.Compile("TestExcel.xls", Path.GetFullPath("./TestExcelXls.txt"), Path.GetFullPath("./"));
+			compiler.Compile("TestExcel.xls", Path.GetFullPath("./TestExcelXls.tml"), Path.GetFullPath("./"));
+		    Assert.True(File.Exists("TestExcelXls.tml"));
 
 		}
 		[Test]
 		public void TestCompileXlsx()
 		{
 			var compiler = new Compiler();
-			compiler.Compile("TestExcel.xlsx", Path.GetFullPath("./TestExcelXlsx.txt"), Path.GetFullPath("./"));
+			compiler.Compile("TestExcel.xlsx", Path.GetFullPath("./TestExcelXlsx.tml"), Path.GetFullPath("./"));
+		    Assert.True(File.Exists("TestExcelXlsx.tml"));
 
+		}
+
+		[Test]
+	    public void TestModifyXls()
+		{
+		    var file = new SimpleExcelFile("TestExcel.xls");
+		    file.Save("TestExcelSave.xls");
+		    Assert.True(File.Exists("TestExcelSave.xls"));
+		}
+		[Test]
+	    public void TestModifyXlsx()
+		{
+		    var file = new SimpleExcelFile("TestExcel.xlsx");
+		    file.Save("TestExcelSave.xlsx");
+		    Assert.True(File.Exists("TestExcelSave.xlsx"));
 		}
     }
 }
