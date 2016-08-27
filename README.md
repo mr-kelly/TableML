@@ -15,7 +15,7 @@ TableML, Table Markup Language, 基于电子表格标记语言，
 您可以使用Excel编译如下内容，并保存为文件test.xlsx:
 
 | Id            | #Something       | Value    | Comment               |
-| --            | --               | --       | --                    |
+| ---           | ---              | ---      | ---                   |
 | int           | string           | string   | string                |
 | 关键字/注释行 | 带#开头的注释列  | 内容     | 带Comment开头的注释列 |
 | 1             | 无用注释         | Abcdefg  | 一些注释              |
@@ -34,11 +34,12 @@ TableML.exe test.xlsx
 ```
 
 执行后，将会生成test.tml文件，打开可以看见编译后内容：
-| Id            | Value    |
-| --            | --       |
-| int           | string   |
-| 1             | Abcdefg  |
-| 2             | Yuiop    |
+
+| Id  | Value   |
+| --- | ---     |
+| int | string  |
+| 1   | Abcdefg |
+| 2   | Yuiop   |
 
 
 ## TableML编辑规则
