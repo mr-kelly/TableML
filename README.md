@@ -58,3 +58,9 @@ TableML.exe test.xlsx
 
 
 
+# TableML for C#/Mono/Xamarin
+
+TableML目前只提供C#版本。当前TableML使用基于Xamarin Studio开发，TableML的C#版本具备了跨平台特性（Windows/Mac/Linux）。
+
+
+
