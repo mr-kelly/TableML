@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TableMLTests", "TableMLTest
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TableMLCompiler", "TableMLCompiler\TableMLCompiler.csproj", "{0EA0F262-7EF3-4696-A99C-F62E0BC2F613}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TableMLCompilerConsole", "TableMLCompilerConsole\TableMLCompilerConsole.csproj", "{D3A252A3-78B0-4651-AD16-C6B6A30F7326}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{0EA0F262-7EF3-4696-A99C-F62E0BC2F613}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0EA0F262-7EF3-4696-A99C-F62E0BC2F613}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0EA0F262-7EF3-4696-A99C-F62E0BC2F613}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3A252A3-78B0-4651-AD16-C6B6A30F7326}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3A252A3-78B0-4651-AD16-C6B6A30F7326}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3A252A3-78B0-4651-AD16-C6B6A30F7326}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3A252A3-78B0-4651-AD16-C6B6A30F7326}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
