@@ -1,10 +1,10 @@
 ﻿using System.IO;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TableML;
+using NUnit.Framework;
 
 namespace TableMLTests
 {
-    [TestClass]
+	[TestFixture]
     public class TableMLTest
     {
         public string TableString1 = @"Id	Value
@@ -32,7 +32,7 @@ int	string
 30	abc 
 40	temp
 ";
-        [TestMethod]
+        [Test]
         public void TestLoad()
         {
             var table = TableFile.LoadFromString(TableString1, TableString2);
@@ -43,21 +43,21 @@ int	string
         /// <summary>
         /// 传入多个Table
         /// </summary>
-        [TestMethod]
+        [Test]
         public void TestMultString()
         {
             var table = TableFile.LoadFromString(TableString1, TableString2);
             var row = table.GetByPrimaryKey("1");
             Assert.AreEqual("hi", row["Value"]);
         }
-        [TestMethod]
+        [Test]
         public void TestMultStringTableObj()
         {
             var tableObj = TableObject.LoadFromString(TableString1, TableString2);
             var objRow = tableObj.GetByPrimaryKey(10);
             Assert.AreEqual("hi", objRow["Value"]);
         }
-        [TestMethod]
+        [Test]
         public void TestWrite()
         {
             var tableObj = TableFile.LoadFromString(TableString1, TableString2);

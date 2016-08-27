@@ -47,11 +47,21 @@ namespace TableML
             }
         }
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:TableML.TableFileRow"/> class.
+		/// </summary>
+		/// <param name="rowNumber">Row number.</param>
+		/// <param name="headerInfos">Header infos.</param>
         public TableFileRow(int rowNumber, Dictionary<string, HeaderInfo> headerInfos)
         {
             Ctor(rowNumber, headerInfos);
         }
 
+		/// <summary>
+		/// Ctor the specified rowNumber and headerInfos.
+		/// </summary>
+		/// <param name="rowNumber">Row number.</param>
+		/// <param name="headerInfos">Header infos.</param>
         private void Ctor(int rowNumber, Dictionary<string, HeaderInfo> headerInfos)
         {
             RowNumber = rowNumber;
@@ -83,6 +93,7 @@ namespace TableML
         /// <param name="cellStrs"></param>
         public virtual void Parse(string[] cellStrs)
         {
+            
         }
 
         /// <summary>
@@ -93,11 +104,18 @@ namespace TableML
             get { return GetPrimaryKey(); }
         }
 
+        /// <summary>
+        /// By Default, primary key is the first column.
+        /// </summary>
         public virtual object GetPrimaryKey()
         {
             return Get(0);
         }
 
+		/// <summary>
+		/// Get value by the specified index, real implements of all `Get` method
+		/// </summary>
+		/// <param name="index">Index.</param>
         public virtual object Get(int index)
         {
             if (index > Values.Length || index < 0)
@@ -108,6 +126,10 @@ namespace TableML
             return Values[index];
         }
 
+		/// <summary>
+		/// Get the specified headerName.
+		/// </summary>
+		/// <param name="headerName">Header name.</param>
         public string Get(string headerName)
         {
             return this[headerName];

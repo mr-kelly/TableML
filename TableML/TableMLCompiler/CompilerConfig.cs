@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace TableMLCompiler
+namespace TableML.Compiler
 {
 
     public class CompilerConfig
@@ -11,7 +11,7 @@ namespace TableMLCompiler
         /// <summary>
         /// 编译后的扩展名
         /// </summary>
-        public string ExportTabExt = ".bytes";
+        public string ExportTabExt = ".tml";
         // 被认为是注释的表头
         public string[] CommentStartsWith = { "Comment", "#" };
 
