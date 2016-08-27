@@ -84,5 +84,20 @@ int	string
 			compiler.Compile("TestExcel.xlsx", Path.GetFullPath("./TestExcelXlsx.txt"), Path.GetFullPath("./"));
 
 		}
+
+		[Test]
+	    public void TestModifyXls()
+		{
+		    var file = new SimpleExcelFile("TestExcel.xls");
+		    file.Save("TestExcelSave.xls");
+		    Assert.True(File.Exists("TestExcelSave.xls"));
+		}
+		[Test]
+	    public void TestModifyXlsx()
+		{
+		    var file = new SimpleExcelFile("TestExcel.xlsx");
+		    file.Save("TestExcelSave.xlsx");
+		    Assert.True(File.Exists("TestExcelSave.xlsx"));
+		}
     }
 }

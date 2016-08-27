@@ -295,7 +295,7 @@ namespace TableML.Compiler
             cell.SetCellValue(value);
         }
 
-        public void Save()
+        public void Save(string toPath)
         {
             /*for (var loopRow = Worksheet.FirstRowNum; loopRow <= Worksheet.LastRowNum; loopRow++)
         {
@@ -317,7 +317,7 @@ namespace TableML.Compiler
                     memStream.Flush();
                     memStream.Position = 0;
 
-                    using (var fileStream = new FileStream(Path, FileMode.Create, FileAccess.Write))
+                    using (var fileStream = new FileStream(toPath, FileMode.Create, FileAccess.Write))
                     {
                         var data = memStream.ToArray();
                         fileStream.Write(data, 0, data.Length);
@@ -330,6 +330,10 @@ namespace TableML.Compiler
             //    CDebug.LogError(e.Message);
             //    CDebug.LogError("是否打开了Excel表？");
             //}
+        }
+        public void Save()
+        {
+            Save(Path);
         }
 
         /// <summary>
