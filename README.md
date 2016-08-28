@@ -1,11 +1,11 @@
 
 # TableML
 
-TableML, Table Markup Language, 基于电子表格标记语言，
+TableML, Table Markup Language, 基于电子表格的标记语言，
 
 类似JSON, XML, INI，TableML可以作为软件项目的配置标记语言，
 
-与它们不同的是，您可以使用Excel等电子表格编辑软件来配置TableML，自由地添加图标、注释、VB脚本和预编译指令，再由TableML编译器导出干净的TSV格式的配置表表格，编辑方便，使用简单。
+与之不同的是，您可以使用Excel等电子表格编辑软件来配置TableML，自由地添加图标、注释、VB脚本和预编译指令，再由TableML编译器导出干净的TSV格式的配置表表格，编辑方便，使用简单。
 
 目前提供C#版本的运行时、编译器、代码生成器。
 
@@ -29,7 +29,7 @@ TableML, Table Markup Language, 基于电子表格标记语言，
 
 然后使用TableML命令行编译器：
 ```bash
-TableML.exe test.xlsx
+TableML.exe -f test.xlsx
 
 ```
 
@@ -58,6 +58,11 @@ TableML.exe test.xlsx
 - 可以使用预编译指令#if和#endif，条件式控制编译的行
 
 
+
+# 自动读取配置代码生成
+
+TableML编译器内置Liquid模板引擎。您可以自定义模板内容，来为不同的语言生成读表类。
+默认TableML内建支持[KSFramework](https://github.com/mr-kelly/KSFramework)的配置表读取代码，支持热重载、分表等机制。
 
 # TableML for C#/Mono/Xamarin
 

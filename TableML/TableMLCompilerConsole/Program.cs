@@ -8,8 +8,8 @@ namespace TableCompilerConsole
 
 	class Option
 	{
-		[Option('r', "read", Required = true,
-	HelpText = "Input file to be processed.")]
+		[Option('f', "file", Required = true,
+			HelpText = "Input excel or tsv file to be processed.")]
 		public string InputFile { get; set; }
 
 		[Option('v', "verbose", DefaultValue = true,
