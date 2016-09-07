@@ -33,6 +33,14 @@ int	string
 30	abc 
 40	temp
 ";
+
+		[SetUp]
+		public void Init()
+		{
+			var dllDir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+			Directory.SetCurrentDirectory(dllDir);
+        }
+
         [Test]
         public void TestLoad()
         {
@@ -74,7 +82,7 @@ int	string
 		public void TestCompileXls()
 		{
 			var compiler = new Compiler();
-			compiler.Compile("TestExcel.xls", Path.GetFullPath("./TestExcelXls.tml"), Path.GetFullPath("./"));
+			compiler.Compile("./TestExcel.xls", Path.GetFullPath("./TestExcelXls.tml"), Path.GetFullPath("./"));
 		    Assert.True(File.Exists("TestExcelXls.tml"));
 
 		}
