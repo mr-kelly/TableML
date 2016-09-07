@@ -33,39 +33,58 @@ namespace TableML
         public TableFile(TableFileConfig config)
         {
             _config = config;
-            ParseStringsArray(_config.Contents);
+            ParseAll(config);
+        }
+
+        private void ParseAll(TableFileConfig config)
+        {
+            ParseStringsArray(config.Contents);
+            ParseStreamsArray(config.ContentStreams);
+        }
+
+        private void ParseStreamsArray(Stream[] contentStreams)
+        {
+            if (contentStreams != null)
+            {
+                for (var i = 0; i < _config.ContentStreams.Length; i++)
+                {
+                    var stream = _config.ContentStreams[i];
+                    ParseStream(stream);
+                }
+            }
         }
 
         protected void ParseStringsArray(string[] contents)
         {
-            for (var i = 0; i < _config.Contents.Length; i++)
+            if (contents != null)
             {
-                var content = _config.Contents[i];
+                for (var i = 0; i < _config.Contents.Length; i++)
+                {
+                    var content = _config.Contents[i];
 
-                if (!string.IsNullOrEmpty(content))
                     ParseString(content);
+                }
             }
         }
 
         public TableFile(string fileFullPath, Encoding encoding)
         {
-            if (encoding == null)
-            {
-                encoding = Encoding.UTF8; // default encoding
-            }
-
             // 不会锁死, 允许其它程序打开
             using (FileStream fileStream = new FileStream(fileFullPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
-                StreamReader oReader = new StreamReader(fileStream, encoding);
-                //return new TableFile<T>(oReader.ReadToEnd());
                 var config = new TableFileConfig()
                 {
-                    Contents = new string[] { oReader.ReadToEnd() }
+                    ContentStreams = new Stream[] { fileStream },
                 };
+
+                if (encoding != null)
+                {
+                    config.Encoding = encoding;
+                }
+
                 _config = config;
 
-                ParseStringsArray(_config.Contents);
+                ParseAll(_config);
             }
         }
 
@@ -106,7 +125,7 @@ namespace TableML
         /// <summary>
         /// 读取Reader的行数递增索引
         /// </summary>
-        private int rowIndex = 1; // 从第1行开始
+        private int _rowIndex = 1; // 从第1行开始
 
         protected bool ParseReader(TextReader oReader)
         {
@@ -157,9 +176,9 @@ namespace TableML
                 {
                     string[] splitString1 = sLine.Split(_config.Separators, StringSplitOptions.None);
 
-                    TabInfo[rowIndex] = splitString1;
+                    TabInfo[_rowIndex] = splitString1;
 
-                    T newT = (T)Activator.CreateInstance(typeof(T), rowIndex, Headers);  // the New Object may not be used this time, so cache it!
+                    T newT = (T)Activator.CreateInstance(typeof(T), _rowIndex, Headers);  // the New Object may not be used this time, so cache it!
 
                     newT.Values = splitString1;
 
@@ -184,8 +203,8 @@ namespace TableML
                         }
                     }
 
-                    Rows[rowIndex] = newT;
-                    rowIndex++;
+                    Rows[_rowIndex] = newT;
+                    _rowIndex++;
                 }
             }
 
@@ -272,14 +291,34 @@ namespace TableML
             }
 
         }
-        protected bool ParseString(string content)
+
+        protected bool ParseStream(Stream stream)
         {
-            using (var oReader = new StringReader(content))
+            if (stream != null)
             {
-                ParseReader(oReader);
+                using (var oReader = new StreamReader(stream, _config.Encoding))
+                {
+                    ParseReader(oReader);
+                }
+                return true;
             }
 
-            return true;
+            return false;
+        }
+
+        protected bool ParseString(string content)
+        {
+            if (!string.IsNullOrEmpty(content))
+            {
+                using (var oReader = new StringReader(content))
+                {
+                    ParseReader(oReader);
+                }
+
+                return true;
+            }
+
+            return false;
         }
 
         public bool HasColumn(string colName)

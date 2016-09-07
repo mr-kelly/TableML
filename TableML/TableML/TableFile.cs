@@ -58,11 +58,28 @@ namespace TableML
     {
         public static TableFileExceptionDelegate GlobalExceptionEvent;
     }
+
     public class TableFileConfig
     {
+        /// <summary>
+        /// Contents use stream, will be more effective
+        /// </summary>
+        public Stream[] ContentStreams;
+
+        /// <summary>
+        /// Use string to parse
+        /// </summary>
         public string[] Contents;
+
         public char[] Separators = new char[] { '\t' };
+        /// <summary>
+        /// How to handle error
+        /// </summary>
         public TableFileExceptionDelegate OnExceptionEvent;
+        /// <summary>
+        /// Default Encoding : UTF-8
+        /// </summary>
+        public Encoding Encoding = Encoding.UTF8;
     }
 
     /// <summary>
