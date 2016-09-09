@@ -41,7 +41,7 @@ namespace TableML.Compiler
 		/// <summary>
 		/// 是否自动在编译配置表时生成静态代码，如果不需要，外部设置false
 		/// </summary>
-		public static bool AutoGenerateCode = true;
+		//public static bool AutoGenerateCode = true;
 
 		/// <summary>
 		/// 当生成的类名，包含数组中字符时，不生成代码
@@ -52,25 +52,25 @@ namespace TableML.Compiler
 		///     "SubdirSubSubDirExample3",
 		/// };
 		/// </example>
-		public static string[] GenerateCodeFilesFilter = null;
+		public string[] GenerateCodeFilesFilter = null;
 
 		/// <summary>
 		/// 条件编译变量
 		/// </summary>
-		public static string[] CompileSettingConditionVars;
+		public string[] CompileSettingConditionVars;
 
 		/// <summary>
 		/// 可以为模板提供额外生成代码块！返回string即可！
 		/// 自定义[InitializeOnLoad]的类并设置这个委托
 		/// </summary>
-		public static CustomExtraStringDelegate CustomExtraString;
+		public CustomExtraStringDelegate CustomExtraString;
 		public delegate string CustomExtraStringDelegate(TableCompileResult tableCompileResult);
 
 		/// <summary>
 		/// Generate static code from settings
 		/// </summary>
 		/// <param name="templateVars"></param>
-		static void GenerateCode(string genCodeFilePath, string nameSpace, List<Hash> files)
+		void GenerateCode(string genCodeFilePath, string nameSpace, List<Hash> files)
 		{
 
 			var codeTemplates = new Dictionary<string, string>()
@@ -123,7 +123,7 @@ namespace TableML.Compiler
 		/// <param name="changeExtension"></param>
 		/// <param name="force"></param>
 		/// <returns></returns>
-		public static List<TableCompileResult> CompileTableMLAll(string sourcePath, string compilePath, string genCodeFilePath, string changeExtension = ".bytes", bool force = false)
+		public List<TableCompileResult> CompileTableMLAll(string sourcePath, string compilePath, string genCodeFilePath, string changeExtension = ".bytes", bool force = false)
 		{
 			var results = new List<TableCompileResult>();
 			var compileBaseDir = compilePath;
@@ -287,7 +287,7 @@ namespace TableML.Compiler
 		/// </summary>
 		/// <param name="force">Whether or not,check diff.  false will be faster!</param>
 		/// <param name="genCode">Generate static code?</param>
-		public static void DoCompileSettings(string sourcePath, string compilePath, string codePath, string settingExtension = ".bytes", bool force = true)
+		public void DoCompileSettings(string sourcePath, string compilePath, string codePath, string settingExtension = ".bytes", bool force = true)
 		{
 			CompileTableMLAll(sourcePath, compilePath, codePath, settingExtension, force);
 		}

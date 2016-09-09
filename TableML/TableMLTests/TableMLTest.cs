@@ -114,9 +114,11 @@ int	string
 		[Test]
 		public void TestBatchCompile()
 		{
-			var results = BatchCompiler.CompileTableMLAll("TestSettings", "TestSettingsResult", "TestSettings.cs.gen");
-			Assert.AreEqual(2, results.Count);
+			var bc = new BatchCompiler();
+			var results = bc.CompileTableMLAll("TestSettings", "TestSettingsResult", "TestSettings.cs.gen");
 
+			Assert.AreEqual(2, results.Count);
+			Assert.True(File.Exists("TestSettings.cs.gen"));
 		}
     }
 }

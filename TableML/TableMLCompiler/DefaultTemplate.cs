@@ -1,6 +1,10 @@
 ﻿
 namespace TableML.Compiler
 {
+
+	/// <summary>
+	/// Default template, for Unity + KEngine
+	/// </summary>
 	public class DefaultTemplate
 	{
 		public static string GenCodeTemplate = @"
