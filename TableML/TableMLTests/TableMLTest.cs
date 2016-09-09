@@ -82,7 +82,7 @@ int	string
 		public void TestCompileXls()
 		{
 			var compiler = new Compiler();
-			compiler.Compile("./TestExcel.xls", Path.GetFullPath("./TestExcelXls.tml"), Path.GetFullPath("./"));
+			compiler.Compile("./TestSettings/TestExcel.xls", Path.GetFullPath("./TestExcelXls.tml"), Path.GetFullPath("./"));
 		    Assert.True(File.Exists("TestExcelXls.tml"));
 
 		}
@@ -90,7 +90,7 @@ int	string
 		public void TestCompileXlsx()
 		{
 			var compiler = new Compiler();
-			compiler.Compile("TestExcel.xlsx", Path.GetFullPath("./TestExcelXlsx.tml"), Path.GetFullPath("./"));
+			compiler.Compile("TestSettings/TestExcel.xlsx", Path.GetFullPath("./TestExcelXlsx.tml"), Path.GetFullPath("./"));
 		    Assert.True(File.Exists("TestExcelXlsx.tml"));
 
 		}
@@ -108,6 +108,15 @@ int	string
 		    var file = new SimpleExcelFile("TestExcel.xlsx");
 		    file.Save("TestExcelSave.xlsx");
 		    Assert.True(File.Exists("TestExcelSave.xlsx"));
+		}
+
+
+		[Test]
+		public void TestBatchCompile()
+		{
+			var results = BatchCompiler.CompileTableMLAll("TestSettings", "TestSettingsResult", "TestSettings.cs.gen");
+			Assert.AreEqual(2, results.Count);
+
 		}
     }
 }

@@ -46,6 +46,9 @@
     <Reference Include="NPOI.OpenXmlFormats">
       <HintPath>..\packages\NPOI.2.2.1\lib\net20\NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
+    <Reference Include="DotLiquid">
+      <HintPath>DotLiquid.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -62,6 +65,9 @@
     <Compile Include="Compiler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimpleExcelFile.cs" />
+    <Compile Include="BatchCompiler.cs" />
+    <Compile Include="Template.cs" />
+    <Compile Include="TableColumnVars.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TableML\TableML.csproj">
