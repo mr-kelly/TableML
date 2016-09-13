@@ -98,16 +98,16 @@ int	string
 		[Test]
 	    public void TestModifyXls()
 		{
-		    var file = new SimpleExcelFile("TestExcel.xls");
-		    file.Save("TestExcelSave.xls");
-		    Assert.True(File.Exists("TestExcelSave.xls"));
+		    var file = new SimpleExcelFile("TestSettings/TestExcel.xls");
+		    file.Save("TestSettings/TestExcelSave.xls");
+		    Assert.True(File.Exists("TestSettings/TestExcelSave.xls"));
 		}
 		[Test]
 	    public void TestModifyXlsx()
 		{
-		    var file = new SimpleExcelFile("TestExcel.xlsx");
-		    file.Save("TestExcelSave.xlsx");
-		    Assert.True(File.Exists("TestExcelSave.xlsx"));
+		    var file = new SimpleExcelFile("TestSettings/TestExcel.xlsx");
+		    file.Save("TestSettings/TestExcelSave.xlsx");
+		    Assert.True(File.Exists("TestSettings/TestExcelSave.xlsx"));
 		}
 
 
