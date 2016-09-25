@@ -90,7 +90,7 @@ int	string
 		public void TestCompileXlsx()
 		{
 			var compiler = new Compiler();
-			compiler.Compile("TestSettings/TestExcel.xlsx", Path.GetFullPath("./TestExcelXlsx.tml"), Path.GetFullPath("./"));
+			compiler.Compile("TestSettings/TestExcel2.xlsx", Path.GetFullPath("./TestExcelXlsx.tml"), Path.GetFullPath("./"));
 		    Assert.True(File.Exists("TestExcelXlsx.tml"));
 
 		}
@@ -105,9 +105,10 @@ int	string
 		[Test]
 	    public void TestModifyXlsx()
 		{
-		    var file = new SimpleExcelFile("TestSettings/TestExcel.xlsx");
-		    file.Save("TestSettings/TestExcelSave.xlsx");
-		    Assert.True(File.Exists("TestSettings/TestExcelSave.xlsx"));
+		    var file = new SimpleExcelFile("TestSettings/TestExcel2.xlsx");
+		    file.Save("TestSettings/TestExcel2Save.xlsx");
+		    Assert.True(File.Exists("TestSettings/TestExcel2Save.xlsx"));
+			File.Delete("TestSettings/TestExcel2Save.xlsx"); // TODO: Save NPOI xlsx cannot open
 		}
 
 
@@ -115,9 +116,9 @@ int	string
 		public void TestBatchCompile()
 		{
 			var bc = new BatchCompiler();
-			var results = bc.CompileTableMLAll("TestSettings", "TestSettingsResult", "TestSettings.cs.gen");
+			var results = bc.CompileTableMLAll("TestSettings", "TestSettingsResult", "TestSettings.cs.gen", DefaultTemplate.GenCodeTemplate, "AppSettings", ".bytes", true);
 
-			Assert.AreEqual(2, results.Count);
+			Assert.AreEqual(3, results.Count);
 			Assert.True(File.Exists("TestSettings.cs.gen"));
 		}
     }

@@ -70,12 +70,12 @@ namespace TableML.Compiler
 		/// Generate static code from settings
 		/// </summary>
 		/// <param name="templateVars"></param>
-		void GenerateCode(string genCodeFilePath, string nameSpace, List<Hash> files)
+		void GenerateCode(string templateString, string genCodeFilePath, string nameSpace, List<Hash> files)
 		{
 
 			var codeTemplates = new Dictionary<string, string>()
 			{
-				{DefaultTemplate.GenCodeTemplate, genCodeFilePath},
+				{templateString, genCodeFilePath},
 			};
 
 			foreach (var kv in codeTemplates)
@@ -123,7 +123,8 @@ namespace TableML.Compiler
 		/// <param name="changeExtension"></param>
 		/// <param name="force"></param>
 		/// <returns></returns>
-		public List<TableCompileResult> CompileTableMLAll(string sourcePath, string compilePath, string genCodeFilePath, string changeExtension = ".bytes", bool force = false)
+		public List<TableCompileResult> CompileTableMLAll(string sourcePath, string compilePath, 
+		                                                  string genCodeFilePath, string genCodeTemplateString = null, string nameSpace = "AppSettings", string changeExtension = ".bytes", bool force = false)
 		{
 			var results = new List<TableCompileResult>();
 			var compileBaseDir = compilePath;
@@ -250,8 +251,7 @@ namespace TableML.Compiler
 					}
 
 
-					var nameSpace = "AppSettings";
-					GenerateCode(genCodeFilePath, nameSpace, templateHashes);
+					GenerateCode(genCodeTemplateString, genCodeFilePath, nameSpace, templateHashes);
 				}
 
 			}
@@ -287,10 +287,10 @@ namespace TableML.Compiler
 		/// </summary>
 		/// <param name="force">Whether or not,check diff.  false will be faster!</param>
 		/// <param name="genCode">Generate static code?</param>
-		public void DoCompileSettings(string sourcePath, string compilePath, string codePath, string settingExtension = ".bytes", bool force = true)
-		{
-			CompileTableMLAll(sourcePath, compilePath, codePath, settingExtension, force);
-		}
+		//public void DoCompileSettings(string sourcePath, string compilePath, string codePath, string settingExtension = ".bytes", bool force = true)
+		//{
+		//	CompileTableMLAll(sourcePath, compilePath, codePath, DefaultTemplate.GenCodeTemplate, "AppSettings", settingExtension, force);
+		//}
 	}
 
 	/// <summary>

@@ -38,7 +38,7 @@
     <None Include="TestSettings\TestExcel.xls">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="TestSettings\TestExcel.xlsx">
+    <None Include="TestSettings\TestExcel2.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
