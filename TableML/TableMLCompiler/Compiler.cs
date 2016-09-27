@@ -115,7 +115,7 @@ namespace TableML.Compiler
 
                         renderVars.FieldsInternal.Add(new TableColumnVars
                         {
-                            Index = colIndex,
+                            Index = colIndex - ignoreColumns.Count, // count the comment columns
                             Type = typeName,
                             Name = colNameStr,
                             DefaultValue = defaultVal,
