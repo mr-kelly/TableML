@@ -37,8 +37,8 @@ int	string
 		[SetUp]
 		public void Init()
 		{
-			var dllDir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-			Directory.SetCurrentDirectory(dllDir);
+//			var dllDir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+//			Directory.SetCurrentDirectory(dllDir);
         }
 
         [Test]
@@ -108,7 +108,7 @@ int	string
 		    var file = new SimpleExcelFile("TestSettings/TestExcel2.xlsx");
 		    file.Save("TestSettings/TestExcel2Save.xlsx");
 		    Assert.True(File.Exists("TestSettings/TestExcel2Save.xlsx"));
-			File.Delete("TestSettings/TestExcel2Save.xlsx"); // TODO: Save NPOI xlsx cannot open
+//			File.Delete("TestSettings/TestExcel2Save.xlsx"); // TODO: Save NPOI xlsx cannot open
 		}
 
 
@@ -118,7 +118,7 @@ int	string
 			var bc = new BatchCompiler();
 			var results = bc.CompileTableMLAll("TestSettings", "TestSettingsResult", "TestSettings.cs.gen", DefaultTemplate.GenCodeTemplate, "AppSettings", ".bytes", true);
 
-			Assert.AreEqual(3, results.Count);
+			Assert.AreEqual(4, results.Count);
 			Assert.True(File.Exists("TestSettings.cs.gen"));
 		}
     }
