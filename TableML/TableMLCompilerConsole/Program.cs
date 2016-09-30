@@ -34,7 +34,7 @@ namespace TableCompilerConsole
 
 				var compiler = new Compiler();
 				var result = compiler.Compile(options.InputFile);
-				Console.WriteLine(string.Format("Compile excel file: {0} , to {1}", options.InputFile, result.TabFilePath));
+				Console.WriteLine(string.Format("Compile excel file: {0} , to {1}", options.InputFile, result.TabFileRelativePath));
 			}
 		}
 	}

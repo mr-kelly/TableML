@@ -235,7 +235,7 @@ namespace TableML.Compiler
 								templateVars.Add(templateVar.ClassName, templateVar);
 							else
 							{
-								templateVars[templateVar.ClassName].Paths.Add(compileResult.TabFilePath);
+								templateVars[templateVar.ClassName].Paths.Add(compileResult.TabFileRelativePath);
 							}
 						}
 
@@ -347,8 +347,8 @@ namespace TableML.Compiler
 		public TableTemplateVars(TableCompileResult compileResult, string extraString)
 			: base()
 		{
-			var tabFilePath = compileResult.TabFilePath;
-			Paths.Add(compileResult.TabFilePath);
+			var tabFilePath = compileResult.TabFileRelativePath;
+			Paths.Add(compileResult.TabFileRelativePath);
 
 			ClassName = DefaultClassNameParse(tabFilePath);
 			// 可自定义Class Name

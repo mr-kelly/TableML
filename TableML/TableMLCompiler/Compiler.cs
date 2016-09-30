@@ -235,14 +235,17 @@ namespace TableML.Compiler
 
             // 基于base dir路径
             var tabFilePath = exportPath; // without extension
+			var fullTabFilePath = Path.GetFullPath(tabFilePath);
             if (!string.IsNullOrEmpty(compileBaseDir))
             {
-                tabFilePath = tabFilePath.Replace(compileBaseDir, ""); // 保留后戳
+				var fullCompileBaseDir = Path.GetFullPath(compileBaseDir);
+				tabFilePath = fullTabFilePath.Replace(fullCompileBaseDir, ""); // 保留后戳
             }
             if (tabFilePath.StartsWith("/"))
                 tabFilePath = tabFilePath.Substring(1);
 
-            renderVars.TabFilePath = tabFilePath;
+			renderVars.TabFileFullPath = fullTabFilePath;
+            renderVars.TabFileRelativePath = tabFilePath;
 
             return renderVars;
         }

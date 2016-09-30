@@ -18,7 +18,8 @@ namespace TableML.Compiler
     /// </summary>
     public class TableCompileResult
     {
-        public string TabFilePath { get; set; }
+        public string TabFileFullPath { get; set; }
+        public string TabFileRelativePath { get; set; }
         public List<TableColumnVars> FieldsInternal { get; set; } // column + type
 
         public string PrimaryKey { get; set; }
