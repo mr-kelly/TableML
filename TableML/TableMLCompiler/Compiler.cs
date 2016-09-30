@@ -235,10 +235,10 @@ namespace TableML.Compiler
 
             // 基于base dir路径
             var tabFilePath = exportPath; // without extension
-			var fullTabFilePath = Path.GetFullPath(tabFilePath);
+			var fullTabFilePath = Path.GetFullPath(tabFilePath).Replace("\\", "/");;
             if (!string.IsNullOrEmpty(compileBaseDir))
             {
-				var fullCompileBaseDir = Path.GetFullPath(compileBaseDir);
+				var fullCompileBaseDir = Path.GetFullPath(compileBaseDir).Replace("\\", "/");;
 				tabFilePath = fullTabFilePath.Replace(fullCompileBaseDir, ""); // 保留后戳
             }
             if (tabFilePath.StartsWith("/"))

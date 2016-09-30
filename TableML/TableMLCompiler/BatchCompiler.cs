@@ -235,7 +235,7 @@ namespace TableML.Compiler
 								templateVars.Add(templateVar.ClassName, templateVar);
 							else
 							{
-								templateVars[templateVar.ClassName].Paths.Add(compileResult.TabFileRelativePath);
+								templateVars[templateVar.ClassName].RelativePaths.Add(compileResult.TabFileRelativePath);
 							}
 						}
 
@@ -305,7 +305,7 @@ namespace TableML.Compiler
 		/// </summary>
 		public static TableTemplateVars.CustomClassNameDelegate CustomClassNameFunc;
 
-		public List<string> Paths = new List<string>();
+		public List<string> RelativePaths = new List<string>();
 
 		/// <summary>
 		///  构建成一个数组"aaa", "bbb"
@@ -314,7 +314,7 @@ namespace TableML.Compiler
 		{
 			get
 			{
-				var paths = "\"" + string.Join("\", \"", Paths.ToArray()) + "\"";
+				var paths = "\"" + string.Join("\", \"", RelativePaths.ToArray()) + "\"";
 				return paths;
 			}
 		}
@@ -347,13 +347,13 @@ namespace TableML.Compiler
 		public TableTemplateVars(TableCompileResult compileResult, string extraString)
 			: base()
 		{
-			var tabFilePath = compileResult.TabFileRelativePath;
-			Paths.Add(compileResult.TabFileRelativePath);
+			var tabFileRelativePath = compileResult.TabFileRelativePath;
+			RelativePaths.Add(compileResult.TabFileRelativePath);
 
-			ClassName = DefaultClassNameParse(tabFilePath);
+			ClassName = DefaultClassNameParse(tabFileRelativePath);
 			// 可自定义Class Name
 			if (CustomClassNameFunc != null)
-				ClassName = CustomClassNameFunc(ClassName, tabFilePath);
+				ClassName = CustomClassNameFunc(ClassName, tabFileRelativePath);
 
 			FieldsInternal = compileResult.FieldsInternal;
 			PrimaryKey = compileResult.PrimaryKey;

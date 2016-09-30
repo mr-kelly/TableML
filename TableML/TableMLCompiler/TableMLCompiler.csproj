@@ -33,6 +33,7 @@
     <Reference Include="System" />
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="NPOI">
       <HintPath>..\packages\NPOI.2.2.1\lib\net20\NPOI.dll</HintPath>
@@ -73,6 +74,7 @@
     <ProjectReference Include="..\TableML\TableML.csproj">
       <Project>{ba4b8898-dc04-4934-8858-d505226d1a28}</Project>
       <Name>TableML</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
