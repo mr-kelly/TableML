@@ -12,7 +12,7 @@ TableML, Table Markup Language, 基于电子表格的标记语言，
 ## Example
 
 
-您可以使用Excel编译如下内容，并保存为文件test.xlsx:
+您可以使用Excel编译如下内容，并保存为文件setting/test.xls:
 
 | Id            | #Something       | Value    | Comment               |
 | ---           | ---              | ---      | ---                   |
@@ -29,17 +29,19 @@ TableML, Table Markup Language, 基于电子表格的标记语言，
 
 然后使用TableML命令行编译器：
 ```bash
-TableML.exe -f test.xlsx
+TableML.exe --Src setting --To setting2 --CodeFile Code.cs
 
 ```
 
-执行后，将会生成test.tml文件，打开可以看见编译后内容：
+执行后，将会生成setting2/test.tml文件，打开可以看见编译后内容：
 
 | Id  | Value   |
 | --- | ---     |
 | int | string  |
 | 1   | Abcdefg |
 | 2   | Yuiop   |
+
+另外附带一份Code.cs，自动生成的代码。
 
 
 ## TableML编辑规则
@@ -62,11 +64,9 @@ TableML.exe -f test.xlsx
 # 自动读取配置代码生成
 
 TableML编译器内置Liquid模板引擎。您可以自定义模板内容，来为不同的语言生成读表类。
-默认TableML内建支持[KSFramework](https://github.com/mr-kelly/KSFramework)的配置表读取代码，支持热重载、分表等机制。
+
+TableML是[KSFramework](https://github.com/mr-kelly/KSFramework)的一部分，用于游戏配置表读取代码，支持热重载、分表等机制。
 
 # TableML for C#/Mono/Xamarin
 
 TableML目前只提供C#版本。当前TableML使用基于Xamarin Studio开发，TableML的C#版本具备了跨平台特性（Windows/Mac/Linux）。
-
-
-

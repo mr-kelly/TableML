@@ -121,10 +121,10 @@ namespace TableML.Compiler
 		/// <param name="compilePath"></param>
 		/// <param name="genCodeFilePath"></param>
 		/// <param name="changeExtension"></param>
-		/// <param name="force"></param>
+		/// <param name="forceAll">no diff! only force compile will generate code</param>
 		/// <returns></returns>
 		public List<TableCompileResult> CompileTableMLAll(string sourcePath, string compilePath, 
-		                                                  string genCodeFilePath, string genCodeTemplateString = null, string nameSpace = "AppSettings", string changeExtension = ".bytes", bool force = false)
+		                                                  string genCodeFilePath, string genCodeTemplateString = null, string nameSpace = "AppSettings", string changeExtension = ".bytes", string settingCodeIgnorePattern = null, bool forceAll = false)
 		{
 			var results = new List<TableCompileResult>();
 			var compileBaseDir = compilePath;
@@ -163,7 +163,7 @@ namespace TableML.Compiler
 						{
 							var toFileInfo = new FileInfo(compileToPath);
 
-							if (!force && srcFileInfo.LastWriteTime == toFileInfo.LastWriteTime)
+							if (!forceAll && srcFileInfo.LastWriteTime == toFileInfo.LastWriteTime)
 							{
 								//Log.DoLog("Pass!SameTime! From {0} to {1}", excelPath, compileToPath);
 								doCompile = false;
@@ -201,14 +201,12 @@ namespace TableML.Compiler
 					var templateVars = new Dictionary<string, TableTemplateVars>();
 					foreach (var compileResult in results)
 					{
-						// TODO: 判断本文件是否忽略代码生成，用正则表达式
-						//var settingCodeIgnorePattern = AppEngine.GetConfig("KEngine.Setting", "SettingCodeIgnorePattern", false);
-						//if (!string.IsNullOrEmpty(settingCodeIgnorePattern))
-						//{
-						//	var ignoreRegex = new Regex(settingCodeIgnorePattern);
-						//	if (ignoreRegex.IsMatch(compileResult.TabFilePath))
-						//		continue; // ignore this 
-						//}
+						if (!string.IsNullOrEmpty(settingCodeIgnorePattern))
+						{
+							var ignoreRegex = new Regex(settingCodeIgnorePattern);
+							if (ignoreRegex.IsMatch(compileResult.TabFileRelativePath))
+								continue; // ignore this 
+						}
 
 						var customExtraStr = CustomExtraString != null ? CustomExtraString(compileResult) : null;
 
@@ -251,7 +249,11 @@ namespace TableML.Compiler
 					}
 
 
-					GenerateCode(genCodeTemplateString, genCodeFilePath, nameSpace, templateHashes);
+				    if (forceAll)
+				    {
+                        // force 才进行代码编译
+                        GenerateCode(genCodeTemplateString, genCodeFilePath, nameSpace, templateHashes);
+				    }
 				}
 
 			}

@@ -255,7 +255,7 @@ namespace {{ NameSpace }}
 	/// Auto Generate for Tab File: {{ file.TabFilePaths }}
     /// Singleton class for less memory use
 	/// </summary>
-	public partial class {{file.ClassName}}Setting : TableRowParser
+	public partial class {{file.ClassName}}Setting : TableRowFieldParser
 	{
 		{% for field in file.Fields %}
         /// <summary>
@@ -264,12 +264,12 @@ namespace {{ NameSpace }}
         public {{ field.FormatType }} {{ field.Name}} { get; private set;}
         {% endfor %}
 
-        internal {{file.ClassName}}Setting(TableRow row)
+        internal {{file.ClassName}}Setting(TableFileRow row)
         {
             Reload(row);
         }
 
-        internal void Reload(TableRow row)
+        internal void Reload(TableFileRow row)
         { {% for field in file.Fields %}
             {{ field.Name}} = row.Get_{{ field.TypeMethod }}(row.Values[{{ field.Index }}], ""{{ field.DefaultValue }}""); {% endfor %}
         }
@@ -279,7 +279,7 @@ namespace {{ NameSpace }}
         /// </summary>
         /// <param name=""row""></param>
         /// <returns></returns>
-        public static {{ file.PrimaryKeyField.FormatType }} ParsePrimaryKey(TableRow row)
+        public static {{ file.PrimaryKeyField.FormatType }} ParsePrimaryKey(TableFileRow row)
         {
             var primaryKey = row.Get_{{ file.PrimaryKeyField.TypeMethod }}(row.Values[{{ file.PrimaryKeyField.Index }}], ""{{ file.PrimaryKeyField.DefaultValue }}"");
             return primaryKey;
