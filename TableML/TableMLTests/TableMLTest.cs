@@ -116,7 +116,7 @@ int	string
 		public void TestBatchCompile()
 		{
 			var bc = new BatchCompiler();
-			var results = bc.CompileTableMLAll("TestSettings", "TestSettingsResult", "TestSettings.cs.gen", DefaultTemplate.GenCodeTemplate, "AppSettings", ".bytes", null, true);
+			var results = bc.CompileTableMLAll("TestSettings", "TestSettingsResult", "TestSettings.cs.gen", DefaultTemplate.GenCodeTemplate, "AppSettings", ".tml", null, true);
 
 			Assert.AreEqual(4, results.Count);
 			Assert.True(File.Exists("TestSettings.cs.gen"));

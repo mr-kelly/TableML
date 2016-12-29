@@ -124,7 +124,7 @@ namespace TableML.Compiler
 		/// <param name="forceAll">no diff! only force compile will generate code</param>
 		/// <returns></returns>
 		public List<TableCompileResult> CompileTableMLAll(string sourcePath, string compilePath, 
-		                                                  string genCodeFilePath, string genCodeTemplateString = null, string nameSpace = "AppSettings", string changeExtension = ".bytes", string settingCodeIgnorePattern = null, bool forceAll = false)
+		                                                  string genCodeFilePath, string genCodeTemplateString = null, string nameSpace = "AppSettings", string changeExtension = ".tml", string settingCodeIgnorePattern = null, bool forceAll = false)
 		{
 			var results = new List<TableCompileResult>();
 			var compileBaseDir = compilePath;
@@ -263,36 +263,6 @@ namespace TableML.Compiler
 			}
 			return results;
 		}
-
-		//static string SettingSourcePath
-		//{
-		//	get
-		//	{
-		//		var sourcePath = AppEngine.GetConfig("KEngine.Setting", "SettingSourcePath");
-		//		return sourcePath;
-		//	}
-		//}
-
-		//[MenuItem("KEngine/Settings/Force Compile Settings + Code")]
-		//public static void CompileSettings()
-		//{
-		//	DoCompileSettings(true);
-		//}
-		//[MenuItem("KEngine/Settings/Quick Compile Settings")]
-		//public static void QuickCompileSettings()
-		//{
-		//	DoCompileSettings(false);
-		//}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="force">Whether or not,check diff.  false will be faster!</param>
-		/// <param name="genCode">Generate static code?</param>
-		//public void DoCompileSettings(string sourcePath, string compilePath, string codePath, string settingExtension = ".bytes", bool force = true)
-		//{
-		//	CompileTableMLAll(sourcePath, compilePath, codePath, DefaultTemplate.GenCodeTemplate, "AppSettings", settingExtension, force);
-		//}
 	}
 
 	/// <summary>
