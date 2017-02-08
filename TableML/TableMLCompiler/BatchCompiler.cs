@@ -132,6 +132,7 @@ namespace TableML.Compiler
 			var compiler = new Compiler(new CompilerConfig() { ConditionVars = CompileSettingConditionVars });
 
 			var excelExt = new HashSet<string>() { ".xls", ".xlsx", ".tsv" };
+		    var copyExt = new HashSet<string>() {".txt"};
 			var findDir = sourcePath;
 			try
 			{
@@ -143,13 +144,13 @@ namespace TableML.Compiler
 					nowFileIndex++;
 					var ext = Path.GetExtension(excelPath);
 					var fileName = Path.GetFileNameWithoutExtension(excelPath);
+
+                    var relativePath = excelPath.Replace(findDir, "").Replace("\\", "/");
+                    if (relativePath.StartsWith("/"))
+                        relativePath = relativePath.Substring(1);
 					if (excelExt.Contains(ext) && !fileName.StartsWith("~")) // ~开头为excel临时文件，不要读
 					{
-						// it's an excel file
-						var relativePath = excelPath.Replace(findDir, "").Replace("\\", "/");
-						if (relativePath.StartsWith("/"))
-							relativePath = relativePath.Substring(1);
-
+                        // it's an excel file
 
 						var compileToPath = string.Format("{0}/{1}", compileBaseDir,
 							Path.ChangeExtension(relativePath, changeExtension));
@@ -183,6 +184,15 @@ namespace TableML.Compiler
 
 						}
 					}
+                    else if (copyExt.Contains(ext)) // .txt file, just copy
+                    {
+                        // just copy the files with these ext
+						var compileToPath = string.Format("{0}/{1}", compileBaseDir,
+							relativePath);
+                        File.Copy(excelPath, compileToPath, true);
+
+						Console.WriteLine("Copy File ..." + string.Format("{0} -> {1}", excelPath, compileToPath));
+                    }
 				}
 
 				// 根据模板生成所有代码,  如果不是强制重建，无需进行代码编译
