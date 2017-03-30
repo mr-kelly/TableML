@@ -189,6 +189,9 @@ namespace TableML.Compiler
                         // just copy the files with these ext
 						var compileToPath = string.Format("{0}/{1}", compileBaseDir,
 							relativePath);
+                        var compileToDir = Path.GetDirectoryName(compileToPath);
+                        if (!Directory.Exists(compileToDir))
+                            Directory.CreateDirectory(compileToDir);
                         File.Copy(excelPath, compileToPath, true);
 
 						Console.WriteLine("Copy File ..." + string.Format("{0} -> {1}", excelPath, compileToPath));

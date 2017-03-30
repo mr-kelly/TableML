@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace TableML
 {
     /// <summary>
-    /// Row parser for TableObject
+    /// Row parser for TableObject, auto convert string and number(double)
     /// </summary>
     public class TableObjectRow : TableFileRow
     {
