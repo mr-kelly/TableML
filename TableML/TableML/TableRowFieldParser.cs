@@ -8,6 +8,39 @@ namespace TableML
     /// </summary>
     public partial class TableRowFieldParser
     {
+        public byte Get_byte(string value, string defaultValue)
+        {
+            var str = Get_string(value, defaultValue);
+            return string.IsNullOrEmpty(str) ? default(byte) : byte.Parse(str);
+        }
+
+        public byte Get_Byte(string value, string defaultValue)
+        {
+            return Get_byte(value, defaultValue);
+        }
+
+        public sbyte Get_sbyte(string value, string defaultValue)
+        {
+            var str = Get_string(value, defaultValue);
+            return string.IsNullOrEmpty(str) ? default(sbyte) : sbyte.Parse(str);
+        }
+
+        public sbyte Get_SByte(string value, string defaultValue)
+        {
+            return Get_sbyte(value, defaultValue);
+        }
+
+        public char Get_char(string value, string defaultValue)
+        {
+            var str = Get_string(value, defaultValue);
+            return string.IsNullOrEmpty(str) ? default(char) : char.Parse(str);
+        }
+
+        public char Get_Char(string value, string defaultValue)
+        {
+            return Get_char(value, defaultValue);
+        }
+
         public string Get_String(string value, string defaultValue)
         {
             return Get_string(value, defaultValue);
