@@ -14,32 +14,31 @@ TableML, Table Markup Language, 基于电子表格的标记语言，
 
 您可以使用Excel编译如下内容，并保存为文件setting/test.xls:
 
-| Id            | #Something       | Value    | Comment               |
-| ---           | ---              | ---      | ---                   |
-| int           | string           | string   | string                |
-| 关键字/注释行 | 带#开头的注释列  | 内容     | 带Comment开头的注释列 |
-| 1             | 无用注释         | Abcdefg  | 一些注释              |
-| #注释行       | 无用注释         | Abcdefg  | 一些注释              |
-| Comment注释行 | 无用注释         | Abcdefg  | 一些注释              |
-| 2             | 无用注释         | Yuiop    | 一些注释              |
-| #if LANG_TW   |                  |          |                       |
-| 123           | 这一行不会被编译 | skldfjlj | 一些注释              |
-| #endif        |                  |          |                       |
+| Id          | #Something | Value    | Comment        |
+| ----------- | ---------- | -------- | -------------- |
+| int         | string     | string   | string         |
+| 关键字/注释行     | 带#开头的注释列   | 内容       | 带Comment开头的注释列 |
+| 1           | 无用注释       | Abcdefg  | 一些注释           |
+| #注释行        | 无用注释       | Abcdefg  | 一些注释           |
+| Comment注释行  | 无用注释       | Abcdefg  | 一些注释           |
+| 2           | 无用注释       | Yuiop    | 一些注释           |
+| #if LANG_TW |            |          |                |
+| 123         | 这一行不会被编译   | skldfjlj | 一些注释           |
+| #endif      |            |          |                |
 
 
 然后使用TableML命令行编译器：
 ```bash
 TableML.exe --Src setting --To setting2 --CodeFile Code.cs
-
 ```
 
 执行后，将会生成setting2/test.tml文件，打开可以看见编译后内容：
 
-| Id  | Value   |
-| --- | ---     |
-| int | string  |
-| 1   | Abcdefg |
-| 2   | Yuiop   |
+| Id   | Value   |
+| ---- | ------- |
+| int  | string  |
+| 1    | Abcdefg |
+| 2    | Yuiop   |
 
 另外附带一份Code.cs，自动生成的代码。
 
@@ -58,6 +57,16 @@ TableML.exe --Src setting --To setting2 --CodeFile Code.cs
 - 列名内容以#开头或Comment开头，改列被视为注释列，编译器忽略
 - 行内容的第一个单元格内容，以#开头或Comment开头，改行被视为注释行，编译器忽略
 - 可以使用预编译指令#if和#endif，条件式控制编译的行
+
+
+## 工程使用说明
+
+1. 通过git clone 或者download master的方式将工程下载到本地
+2. 建议使用visual studio2012及更高版本打开 **TableML\TableML.sln**
+3. 在vs中设置**TableMLCompilerConsole** 为启动项目(解决方案面板，选中项目，**右键** - **设为启动项目**)
+4. 建议把项目的输出设为**Release**，然后选择 **菜单栏** - **生成** - **生成TableMLCompilerConsole** 
+5. 打开目录 **TableML\TableMLCompilerConsole\bin\Release** 可以看到已经生成了**TableML.exe**
+
 
 
 
