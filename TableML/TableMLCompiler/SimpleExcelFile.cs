@@ -93,6 +93,11 @@ namespace TableML.Compiler
         /// 预留行数
         /// </summary>
         private const int PreserverRowCount = 3;
+        
+        /// <summary>
+        /// 从第几列开始读，默认是第0列
+        /// </summary>
+        private const int columnIdxStart = 0;
 
         //private DataTable DataTable_;
         private string Path;
@@ -146,13 +151,13 @@ namespace TableML.Compiler
                 var sheetRowCount = GetWorksheetCount();
                 if (sheetRowCount < PreserverRowCount)
                     throw new Exception(string.Format("At lease {0} rows of this excel", sheetRowCount));
-
+          
                 // 列头名
                 var headerRow = Worksheet.GetRow(0);
                 // 列总数保存
                 int columnCount = _columnCount = headerRow.LastCellNum;
 
-                for (int columnIndex = 0; columnIndex < columnCount; columnIndex++)
+                for (int columnIndex = columnIdxStart; columnIndex < columnCount; columnIndex++)
                 {
                     var cell = headerRow.GetCell(columnIndex);
                     var headerName = cell != null ? cell.ToString().Trim() : ""; // trim!
@@ -161,7 +166,7 @@ namespace TableML.Compiler
                 }
                 // 表头声明
                 var statementRow = Worksheet.GetRow(1);
-                for (int columnIndex = 0; columnIndex < columnCount; columnIndex++)
+                for (int columnIndex = columnIdxStart; columnIndex < columnCount; columnIndex++)
                 {
                     var colName = Index2ColName[columnIndex];
                     var statementCell = statementRow.GetCell(columnIndex);
@@ -170,7 +175,7 @@ namespace TableML.Compiler
                 }
                 // 表头注释
                 var commentRow = Worksheet.GetRow(2);
-                for (int columnIndex = 0; columnIndex < columnCount; columnIndex++)
+                for (int columnIndex = columnIdxStart; columnIndex < columnCount; columnIndex++)
                 {
                     var colName = Index2ColName[columnIndex];
                     var commentCell = commentRow.GetCell(columnIndex);
