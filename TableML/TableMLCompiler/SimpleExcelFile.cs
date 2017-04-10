@@ -92,12 +92,11 @@ namespace TableML.Compiler
         /// Header, Statement, Comment, at lease 3 rows
         /// 预留行数
         /// </summary>
-        private const int PreserverRowCount = 3;
-        
+        public const int PreserverRowCount = 3;
         /// <summary>
-        /// 从第几列开始读，默认是第0列
+        /// 从指定列开始读
         /// </summary>
-        private const int columnIdxStart = 0;
+        public const int StartColumnIdx = 1;
 
         //private DataTable DataTable_;
         private string Path;
@@ -156,8 +155,9 @@ namespace TableML.Compiler
                 var headerRow = Worksheet.GetRow(0);
                 // 列总数保存
                 int columnCount = _columnCount = headerRow.LastCellNum;
-
-                for (int columnIndex = columnIdxStart; columnIndex < columnCount; columnIndex++)
+                
+                //NOTE by qingqing-zhao 从指定的列开始读取
+                for (int columnIndex = StartColumnIdx; columnIndex < columnCount; columnIndex++)
                 {
                     var cell = headerRow.GetCell(columnIndex);
                     var headerName = cell != null ? cell.ToString().Trim() : ""; // trim!
@@ -166,7 +166,7 @@ namespace TableML.Compiler
                 }
                 // 表头声明
                 var statementRow = Worksheet.GetRow(1);
-                for (int columnIndex = columnIdxStart; columnIndex < columnCount; columnIndex++)
+                for (int columnIndex = StartColumnIdx; columnIndex < columnCount; columnIndex++)
                 {
                     var colName = Index2ColName[columnIndex];
                     var statementCell = statementRow.GetCell(columnIndex);
@@ -175,7 +175,7 @@ namespace TableML.Compiler
                 }
                 // 表头注释
                 var commentRow = Worksheet.GetRow(2);
-                for (int columnIndex = columnIdxStart; columnIndex < columnCount; columnIndex++)
+                for (int columnIndex = StartColumnIdx; columnIndex < columnCount; columnIndex++)
                 {
                     var colName = Index2ColName[columnIndex];
                     var commentCell = commentRow.GetCell(columnIndex);

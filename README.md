@@ -68,6 +68,16 @@ TableML.exe --Src setting --To setting2 --CodeFile Code.cs
 5. 打开目录 **TableML\TableMLCompilerConsole\bin\Release** 可以看到已经生成了**TableML.exe**
 
 
+### 自定义配置
+
+**1. 从第2列(指定列)开始读**
+
+​	修改SimpleExcelFile.cs中的StartColumnIdx值。
+
+## 读取规则
+
+先读取Excel的行，再读取列，把数据写入到tml文件中。
+
 
 
 # 自动读取配置代码生成

@@ -87,7 +87,8 @@ namespace TableML.Compiler
                     }
                     else
                     {
-                        if (colIndex > 0)
+                        //NOTE by qingqing-zhao 因为是从指定的列开始读取，所以>有效列 才加入\t
+                        if (colIndex > SimpleExcelFile.StartColumnIdx)
                             tableBuilder.Append("\t");
                         tableBuilder.Append(colNameStr);
 
@@ -135,12 +136,13 @@ namespace TableML.Compiler
 
                 if (ignoreColumns.Contains(colIndex)) // comment column, ignore
                     continue;
-                if (colIndex > 0)
+                //NOTE by qingqing-zhao 因为是从指定的列开始读取，所以>有效列 才加入\t
+                if (colIndex > SimpleExcelFile.StartColumnIdx)
                     tableBuilder.Append("\t");
                 tableBuilder.Append(statementStr);
             }
             tableBuilder.Append("\n");
-
+            
             // #if check, 是否正在if false模式, if false时，行被忽略
             var ifCondtioning = true;
             if (doCompile)
@@ -152,14 +154,14 @@ namespace TableML.Compiler
                     rowBuilder.Length = 0;
                     rowBuilder.Capacity = 0;
                     var columnCount = excelFile.GetColumnCount();
-                    for (var loopColumn = 0; loopColumn < columnCount; loopColumn++)
+                    for (var loopColumn = SimpleExcelFile.StartColumnIdx; loopColumn < columnCount; loopColumn++)
                     {
                         if (!ignoreColumns.Contains(loopColumn)) // comment column, ignore 注释列忽略
                         {
                             var columnName = excelFile.Index2ColName[loopColumn];
                             var cellStr = excelFile.GetString(columnName, startRow);
 
-                            if (loopColumn == 0)
+                            if (loopColumn == SimpleExcelFile.StartColumnIdx)
                             {
                                 var cellType = CheckCellType(cellStr);
                                 if (cellType == CellType.Comment) // 如果行首为#注释字符，忽略这一行)
@@ -195,8 +197,8 @@ namespace TableML.Compiler
                                 if (startRow != 0) // 不是第一行，往添加换行，首列
                                     rowBuilder.Append("\n");
                             }
-
-                            if (loopColumn > 0 && loopColumn < columnCount) // 最后一列不需加tab
+                            //NOTE by qingqing-zhao 因为是从指定的列开始读取，所以>有效列 才加入\t
+                            if (loopColumn > SimpleExcelFile.StartColumnIdx && loopColumn < columnCount) // 最后一列不需加tab
                                 rowBuilder.Append("\t");
 
                             // 如果单元格是字符串，换行符改成\\n
