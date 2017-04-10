@@ -232,7 +232,18 @@ namespace TableML.Compiler
             if (cell == null)
                 cell = theRow.CreateCell(colIndex);
             if (cell.CellType == CellType.Formula)
-                return cell.StringCellValue;
+            {
+                //NOTE 单元格内容为公式，获取失败
+                //return cell.StringCellValue.ToString();
+                switch (cell.CachedFormulaResultType)
+                {
+                    //已测试的公式:SUM,& 
+                        case CellType.Numeric:
+                            return cell.NumericCellValue.ToString();
+                        case  CellType.String:
+                            return cell.StringCellValue;
+                }
+            }
             if (cell.CellType == CellType.String)
                 return cell.StringCellValue;
             if (cell.CellType == CellType.Boolean)
