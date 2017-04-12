@@ -94,9 +94,9 @@ namespace TableML.Compiler
         /// </summary>
         public const int PreserverRowCount = 3;
         /// <summary>
-        /// 从指定列开始读
+        /// 从指定列开始读,默认是0
         /// </summary>
-        public const int StartColumnIdx = 1;
+        public const int StartColumnIdx = 0;
 
         //private DataTable DataTable_;
         private string Path;

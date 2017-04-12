@@ -64,6 +64,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="BatchCompilerInSingleFile.cs" />
     <Compile Include="CompilerConfig.cs" />
     <Compile Include="ITableSourceFile.cs" />
     <Compile Include="TableCompileResult.cs" />

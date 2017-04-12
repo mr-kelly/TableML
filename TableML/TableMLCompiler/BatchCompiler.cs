@@ -36,7 +36,7 @@ namespace TableML.Compiler
 	/// <summary>
 	/// BatchCompiler, compile
 	/// </summary>
-	public class BatchCompiler
+	public partial class BatchCompiler
 	{
 		/// <summary>
 		/// 是否自动在编译配置表时生成静态代码，如果不需要，外部设置false
@@ -66,10 +66,13 @@ namespace TableML.Compiler
 		public CustomExtraStringDelegate CustomExtraString;
 		public delegate string CustomExtraStringDelegate(TableCompileResult tableCompileResult);
 
-		/// <summary>
-		/// Generate static code from settings
-		/// </summary>
-		/// <param name="templateVars"></param>
+        /// <summary>
+        /// Generate static code from settings
+        /// </summary>
+        /// <param name="templateString"></param>
+        /// <param name="genCodeFilePath"></param>
+        /// <param name="nameSpace"></param>
+        /// <param name="files"></param>
 		void GenerateCode(string templateString, string genCodeFilePath, string nameSpace, List<Hash> files)
 		{
 
@@ -107,8 +110,15 @@ namespace TableML.Compiler
 						}
 					}
 					else
-						File.WriteAllText(exportPath, genCode);
-
+				    {
+                        //判断目录是否存在
+				       var exportDir = Path.GetDirectoryName(exportPath);
+				        if (!string.IsNullOrEmpty(exportDir) && Directory.Exists(exportDir)== false)
+				        {
+				            Directory.CreateDirectory(exportDir);
+				        }
+                        File.WriteAllText(exportPath, genCode);
+				    }
 				}
 			}
 			// make unity compile
@@ -133,6 +143,11 @@ namespace TableML.Compiler
 
 			var excelExt = new HashSet<string>() { ".xls", ".xlsx", ".tsv" };
 		    var copyExt = new HashSet<string>() {".txt"};
+            if (Directory.Exists(sourcePath) == false)
+            {
+                Console.WriteLine("Error! {0} 路径不存在！{0}", sourcePath);
+                return results;
+            }
 			var findDir = sourcePath;
 			try
 			{
@@ -173,7 +188,7 @@ namespace TableML.Compiler
 						if (doCompile)
 						{
 							Console.WriteLine("[SettingModule]Compile from {0} to {1}", excelPath, compileToPath);
-
+                            Console.WriteLine();//美观一下 打印空白行
 							var compileResult = compiler.Compile(excelPath, compileToPath, compileBaseDir, doCompile);
 
 							// 添加模板值
@@ -319,8 +334,16 @@ namespace TableML.Compiler
 		/// </summary>
 		public Hash PrimaryKeyField
 		{
-			get { return Fields[0]; }
-		}
+            get
+            {   //如果加上判断会导致部分生成的 ParsePrimaryKey() 没有类型
+                //if (Fields != null && Fields.Count > 0)
+                //{
+                //    return Fields[0];
+                //}
+                //return null;
+                return Fields[0];
+            }
+        }
 
 		/// <summary>
 		/// Custom extra strings

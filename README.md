@@ -72,7 +72,28 @@ TableML.exe --Src setting --To setting2 --CodeFile Code.cs
 
 **1. 从第2列(指定列)开始读**
 
-​	修改SimpleExcelFile.cs中的StartColumnIdx值。
+​	修改SimpleExcelFile.cs中的StartColumnIdx值如：
+
+```c#
+   public const int StartColumnIdx = 1;
+```
+
+**2.每个表对应一个Class文件**
+
+调用方法如下：
+
+```c#
+batchCompiler.CompileTableMLAllInSingleFile(srcDirectory, OutputDirectory, CodeFilePath,           templateString, "AppSettings", ".tml", null, true);
+```
+
+示例代码可参考：LocalDebug.cs
+
+**3.修改生成的代码模版**
+
+修改TableML.Compiler.DefaultTemplate中的字符串模版
+
+
+
 
 ## 读取规则
 

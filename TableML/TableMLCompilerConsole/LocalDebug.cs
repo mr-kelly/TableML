@@ -44,7 +44,7 @@ namespace TableCompilerConsole
         }
 
         /// <summary>
-        /// 编译整个目录的excel
+        /// 编译整个目录的excel，每个表生成一个cs文件
         /// </summary>
         public static void CompileAll()
         {
@@ -55,12 +55,12 @@ namespace TableCompilerConsole
             //输出tml文件路径
             var OutputDirectory = "setting";
             //生成的代码路径
-            var CodeFilePath = "Code.cs";
+            var CodeFilePath = "GenCode\\";
             var batchCompiler = new BatchCompiler();
 
-            string templateString = DefaultTemplate.GenCodeTemplate;
+            string templateString = DefaultTemplate.GenSingleClassCodeTemplate;
 
-            var results = batchCompiler.CompileTableMLAll(srcDirectory, OutputDirectory, CodeFilePath,
+            var results = batchCompiler.CompileTableMLAllInSingleFile(srcDirectory, OutputDirectory, CodeFilePath,
                templateString, "AppSettings", ".tml", null, !string.IsNullOrEmpty(CodeFilePath));
 
             Console.WriteLine("Done!");
