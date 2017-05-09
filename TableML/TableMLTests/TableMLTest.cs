@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using TableML;
 using NUnit.Framework;
 using TableML.Compiler;
@@ -8,6 +9,7 @@ namespace TableMLTests
 	[TestFixture]
     public class TableMLTest
     {
+        //第一行不能换行，它就是表格从第1行开始读
         public string TableString1 = @"Id	Value
 int	string
 1	hi
@@ -34,11 +36,14 @@ int	string
 40	temp
 ";
 
-		[SetUp]
-		public void Init()
-		{
-//			var dllDir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-//			Directory.SetCurrentDirectory(dllDir);
+        [SetUp, OneTimeSetUp]
+        public void Init()
+        {
+           //excel目录设置失败，手动写
+            //var dllDir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            var dllDir = @"d:\Git\TableML\TableML\TableMLTests\";
+            Directory.SetCurrentDirectory(dllDir);
+            Console.WriteLine(dllDir);
         }
 
         [Test]

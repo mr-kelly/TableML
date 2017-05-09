@@ -32,7 +32,7 @@ using System.Text.RegularExpressions;
 
 namespace TableML.Compiler
 {
-	
+
     /// <summary>
     /// Compile Excel to TSV
     /// </summary>
@@ -64,7 +64,15 @@ namespace TableML.Compiler
             _config = cfg;
         }
 
-
+        /// <summary>
+        /// 生成tml文件内容
+        /// </summary>
+        /// <param name="path">源excel的相对路径</param>
+        /// <param name="excelFile"></param>
+        /// <param name="compileToFilePath">编译后的tml文件路径</param>
+        /// <param name="compileBaseDir"></param>
+        /// <param name="doCompile"></param>
+        /// <returns></returns>
         private TableCompileResult DoCompilerExcelReader(string path, ITableSourceFile excelFile, string compileToFilePath = null, string compileBaseDir = null, bool doCompile = true)
         {
             var renderVars = new TableCompileResult();
@@ -87,15 +95,17 @@ namespace TableML.Compiler
                     }
                     else
                     {
-                        //NOTE by qingqing-zhao 因为是从指定的列开始读取，所以>有效列 才加入\t
-                        if (colIndex > SimpleExcelFile.StartColumnIdx)
+                        //NOTE by qingqing-zhao 加入\t，从指定的列开始读取，但是dict的索引是从0开始
+                        if (colIndex > 0)
+                        {
                             tableBuilder.Append("\t");
+                        }
                         tableBuilder.Append(colNameStr);
 
                         string typeName = "string";
                         string defaultVal = "";
 
-                        var attrs = excelFile.ColName2Statement[colNameStr].Split(new char[] {'|', '/'}, StringSplitOptions.RemoveEmptyEntries);
+                        var attrs = excelFile.ColName2Statement[colNameStr].Split(new char[] { '|', '/' }, StringSplitOptions.RemoveEmptyEntries);
                         // Type
                         if (attrs.Length > 0)
                         {
@@ -136,13 +146,15 @@ namespace TableML.Compiler
 
                 if (ignoreColumns.Contains(colIndex)) // comment column, ignore
                     continue;
-                //NOTE by qingqing-zhao 因为是从指定的列开始读取，所以>有效列 才加入\t
-                if (colIndex > SimpleExcelFile.StartColumnIdx)
+                //NOTE by qingqing-zhao 加入\t，从指定的列开始读取，但是dict的索引是从0开始
+                if (colIndex > 0)
                     tableBuilder.Append("\t");
                 tableBuilder.Append(statementStr);
             }
             tableBuilder.Append("\n");
-            
+            //以上是tml写入的第一行
+
+
             // #if check, 是否正在if false模式, if false时，行被忽略
             var ifCondtioning = true;
             if (doCompile)
@@ -154,14 +166,14 @@ namespace TableML.Compiler
                     rowBuilder.Length = 0;
                     rowBuilder.Capacity = 0;
                     var columnCount = excelFile.GetColumnCount();
-                    for (var loopColumn = SimpleExcelFile.StartColumnIdx; loopColumn < columnCount; loopColumn++)
+                    for (var loopColumn = 0; loopColumn < columnCount; loopColumn++)
                     {
                         if (!ignoreColumns.Contains(loopColumn)) // comment column, ignore 注释列忽略
                         {
                             var columnName = excelFile.Index2ColName[loopColumn];
                             var cellStr = excelFile.GetString(columnName, startRow);
 
-                            if (loopColumn == SimpleExcelFile.StartColumnIdx)
+                            if (loopColumn == 0)
                             {
                                 var cellType = CheckCellType(cellStr);
                                 if (cellType == CellType.Comment) // 如果行首为#注释字符，忽略这一行)
@@ -174,7 +186,7 @@ namespace TableML.Compiler
                                     var hasAllVars = true;
                                     foreach (var var in ifVars)
                                     {
-                                        if (_config.ConditionVars == null || 
+                                        if (_config.ConditionVars == null ||
                                             !_config.ConditionVars.Contains(var)) // 定义的变量，需要全部配置妥当,否则if失败
                                         {
                                             hasAllVars = false;
@@ -197,9 +209,16 @@ namespace TableML.Compiler
                                 if (startRow != 0) // 不是第一行，往添加换行，首列
                                     rowBuilder.Append("\n");
                             }
-                            //NOTE by qingqing-zhao 因为是从指定的列开始读取，所以>有效列 才加入\t
-                            if (loopColumn > SimpleExcelFile.StartColumnIdx && loopColumn < columnCount) // 最后一列不需加tab
+                            /*
+                                NOTE by qingqing-zhao 因为是从指定的列开始读取，所以>有效列 才加入\t
+                                如果这列是空白的也不需要加入
+                            */
+                            if (!string.IsNullOrEmpty(columnName)
+                               && loopColumn > 0
+                               && loopColumn < columnCount) // 最后一列不需加tab
+                            {
                                 rowBuilder.Append("\t");
+                            }
 
                             // 如果单元格是字符串，换行符改成\\n
                             cellStr = cellStr.Replace("\n", "\\n");
@@ -213,7 +232,9 @@ namespace TableML.Compiler
                         tableBuilder.Append(rowBuilder);
                 }
             }
-            
+            //以上是tml写入其它行
+
+
             var fileName = Path.GetFileNameWithoutExtension(path);
             string exportPath;
             if (!string.IsNullOrEmpty(compileToFilePath))
@@ -237,16 +258,16 @@ namespace TableML.Compiler
 
             // 基于base dir路径
             var tabFilePath = exportPath; // without extension
-			var fullTabFilePath = Path.GetFullPath(tabFilePath).Replace("\\", "/");;
+            var fullTabFilePath = Path.GetFullPath(tabFilePath).Replace("\\", "/"); ;
             if (!string.IsNullOrEmpty(compileBaseDir))
             {
-				var fullCompileBaseDir = Path.GetFullPath(compileBaseDir).Replace("\\", "/");;
-				tabFilePath = fullTabFilePath.Replace(fullCompileBaseDir, ""); // 保留后戳
+                var fullCompileBaseDir = Path.GetFullPath(compileBaseDir).Replace("\\", "/"); ;
+                tabFilePath = fullTabFilePath.Replace(fullCompileBaseDir, ""); // 保留后戳
             }
             if (tabFilePath.StartsWith("/"))
                 tabFilePath = tabFilePath.Substring(1);
 
-			renderVars.TabFileFullPath = fullTabFilePath;
+            renderVars.TabFileFullPath = fullTabFilePath;
             renderVars.TabFileRelativePath = tabFilePath;
 
             return renderVars;
@@ -259,7 +280,7 @@ namespace TableML.Compiler
         /// <returns></returns>
         private string[] GetIfVars(string cellStr)
         {
-            return cellStr.Replace("#if", "").Trim().Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries);
+            return cellStr.Replace("#if", "").Trim().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
         }
 
         /// <summary>
@@ -285,15 +306,15 @@ namespace TableML.Compiler
             return CellType.Value;
         }
 
-		/// <summary>
-		/// Compile the specified path, auto change extension to config `ExportTabExt`
-		/// </summary>
-		/// <param name="path">Path.</param>
-		public TableCompileResult Compile(string path)
-		{
-			var outputPath = System.IO.Path.ChangeExtension(path, this._config.ExportTabExt);
-			return Compile(path, outputPath);
-		}
+        /// <summary>
+        /// Compile the specified path, auto change extension to config `ExportTabExt`
+        /// </summary>
+        /// <param name="path">Path.</param>
+        public TableCompileResult Compile(string path)
+        {
+            var outputPath = System.IO.Path.ChangeExtension(path, this._config.ExportTabExt);
+            return Compile(path, outputPath);
+        }
 
         /// <summary>
         /// Compile a setting file, return a hash for template
@@ -305,8 +326,8 @@ namespace TableML.Compiler
         /// <returns></returns>
         public TableCompileResult Compile(string path, string compileToFilePath, string compileBaseDir = null, bool doRealCompile = true)
         {
-			// 确保目录存在
-			compileToFilePath = Path.GetFullPath(compileToFilePath);
+            // 确保目录存在
+            compileToFilePath = Path.GetFullPath(compileToFilePath);
             var compileToFileDirPath = Path.GetDirectoryName(compileToFilePath);
 
             if (!Directory.Exists(compileToFileDirPath))
@@ -317,7 +338,7 @@ namespace TableML.Compiler
             ITableSourceFile sourceFile;
             if (ext == ".tsv") sourceFile = new SimpleTSVFile(path);
             else sourceFile = new SimpleExcelFile(path);
-            
+
             var hash = DoCompilerExcelReader(path, sourceFile, compileToFilePath, compileBaseDir, doRealCompile);
             return hash;
 

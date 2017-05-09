@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TableMLCompiler", "TableMLC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TableMLCompilerConsole", "TableMLCompilerConsole\TableMLCompilerConsole.csproj", "{D3A252A3-78B0-4651-AD16-C6B6A30F7326}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TableMLGUI", "TableMLGUI\TableMLGUI.csproj", "{55E28E01-2E74-4809-A2EE-A566FEA5D899}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{D3A252A3-78B0-4651-AD16-C6B6A30F7326}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3A252A3-78B0-4651-AD16-C6B6A30F7326}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3A252A3-78B0-4651-AD16-C6B6A30F7326}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55E28E01-2E74-4809-A2EE-A566FEA5D899}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55E28E01-2E74-4809-A2EE-A566FEA5D899}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55E28E01-2E74-4809-A2EE-A566FEA5D899}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55E28E01-2E74-4809-A2EE-A566FEA5D899}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

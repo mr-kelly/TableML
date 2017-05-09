@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -144,11 +144,12 @@ namespace TableML
                 return false;
             }
 
-
+            //NOTE 如果第一行为null则会exception
             string[] firstLineSplitString = headLine.Split(_config.Separators, StringSplitOptions.None);  // don't remove RemoveEmptyEntries!
-            string[] firstLineDef = new string[firstLineSplitString.Length];
 
             var metaLineArr = metaLine.Split(_config.Separators, StringSplitOptions.None);
+            string[] firstLineDef = new string[metaLineArr.Length];
+            Console.WriteLine("headLine.length={0},headMeta.length={1}", firstLineSplitString.Length, metaLineArr.Length);
             Array.Copy(metaLineArr, 0, firstLineDef, 0, metaLineArr.Length);  // 拷贝，确保不会超出表头的
 
             for (int i = 0; i < firstLineSplitString.Length; i++)

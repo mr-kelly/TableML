@@ -85,6 +85,8 @@ namespace TableML
         /// <summary>
         /// Store values of this row
         /// </summary>
+
+
         public string[] Values { get; internal set; }
 
         /// <summary>

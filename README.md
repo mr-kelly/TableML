@@ -78,6 +78,8 @@ TableML.exe --Src setting --To setting2 --CodeFile Code.cs
    public const int StartColumnIdx = 1;
 ```
 
+
+
 **2.每个表对应一个Class文件**
 
 调用方法如下：
@@ -86,12 +88,21 @@ TableML.exe --Src setting --To setting2 --CodeFile Code.cs
 batchCompiler.CompileTableMLAllInSingleFile(srcDirectory, OutputDirectory, CodeFilePath,           templateString, "AppSettings", ".tml", null, true);
 ```
 
-示例代码可参考：LocalDebug.cs
+示例代码可参考：LocalDebug.cs中的CompileAll()
+
+
 
 **3.修改生成的代码模版**
 
 修改TableML.Compiler.DefaultTemplate中的字符串模版
 
+
+
+**4.预留指定行，自定义行，比如第6行是字段名，第8行是数据类型，第15行是字段注释**
+
+扩展`SimpleExcelFile.PreserverRowCount = 预留行`
+
+修改` SimpleExcelFile.ParseExcel`中的`Worksheet.GetRow(5);`
 
 
 

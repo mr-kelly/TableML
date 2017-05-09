@@ -51,7 +51,36 @@ namespace TableML.Compiler
         /// 生成代码的文件名=表名+后缀+.cs，建议和模版中的一致
         /// </summary>
         public const string FileNameSuffix = "Setting";
-        
+
+        /// <summary>
+        /// 处理文件名，符合微软的C#命名风格
+        /// copy from TableTemplateVars.DefaultClassNameParse
+        /// </summary>
+        /// <param name="tabFilePath"></param>
+        /// <returns></returns>
+        public string DefaultClassNameParse(string tabFilePath)
+        {
+            // 未处理路径的类名, 去掉后缀扩展名
+            var classNameOrigin = Path.ChangeExtension(tabFilePath, null);
+
+            // 子目录合并，首字母大写, 组成class name
+            var className = classNameOrigin.Replace("/", "_").Replace("\\", "_");
+            className = className.Replace(" ", "");
+            className = string.Join("", (from name
+                in className.Split(new[] { '_' }, StringSplitOptions.RemoveEmptyEntries)
+                                         select (name[0].ToString().ToUpper() + name.Substring(1, name.Length - 1)))
+                .ToArray());
+
+            // 去掉+或#号后面的字符
+            var plusSignIndex = className.IndexOf("+");
+            className = className.Substring(0, plusSignIndex == -1 ? className.Length : plusSignIndex);
+            plusSignIndex = className.IndexOf("#");
+            className = className.Substring(0, plusSignIndex == -1 ? className.Length : plusSignIndex);
+
+            return className;
+
+        }
+
         /// <summary>
         /// 生成代码文件
         /// </summary>
@@ -60,10 +89,9 @@ namespace TableML.Compiler
         /// <param name="forceAll"></param>
         /// <param name="genManagerClass"></param>
         /// <param name="templateVars">如果是生成Manager Class 一定要在外部初始化此字段</param>
-        void GenSingleClass(TableCompileResult compileResult, string genCodeTemplateString, string genCodeFilePath,
+        public void GenCodeFile(TableCompileResult compileResult, string genCodeTemplateString, string genCodeFilePath,
             string nameSpace = "AppSettings", string changeExtension = ".tml", string settingCodeIgnorePattern = null, bool forceAll = false, bool genManagerClass = false, Dictionary<string, TableTemplateVars> templateVars = null)
         {
-            //代码文件名=tml的文件名
             // 根据编译结果，构建vars，同class名字的，进行合并
             if (!genManagerClass)
             {
@@ -98,18 +126,20 @@ namespace TableML.Compiler
             if (!ignoreThisClassName)
             {
                 if (!templateVars.ContainsKey(templateVar.ClassName))
+                {
                     templateVars.Add(templateVar.ClassName, templateVar);
+                }
                 else
                 {
                     templateVars[templateVar.ClassName].RelativePaths.Add(compileResult.TabFileRelativePath);
                 }
+                //templateVars[templateVar.ClassName].TabFileNames = compileResult.TabFileNames;
             }
 
             if (!genManagerClass)
             {
                 //首字母大写，符合微软命名规范
-                var filenName = compileResult.TabFileRelativePath.Replace(changeExtension, "");
-                var newFileName = string.Concat(filenName.Substring(0, 1).ToUpper(),filenName.Substring(1),FileNameSuffix,".cs");
+                var newFileName = string.Concat(DefaultClassNameParse(compileResult.TabFileRelativePath), FileNameSuffix, ".cs");
                 if (string.IsNullOrEmpty(genCodeFilePath))
                 {
                     genCodeFilePath += string.Concat(DefaultGenCodeDir, newFileName);
@@ -136,6 +166,7 @@ namespace TableML.Compiler
             var templateHashes = new List<Hash>();
             foreach (var kv in templateVars)
             {
+                //TODO render 加多一项TabFilName
                 var templateVar2 = kv.Value;
                 var renderTemplateHash = Hash.FromAnonymousObject(templateVar2);
                 templateHashes.Add(renderTemplateHash);
@@ -156,7 +187,7 @@ namespace TableML.Compiler
             var templateVars = new Dictionary<string, TableTemplateVars>();
             foreach (var compileResult in results)
             {
-                GenSingleClass(compileResult, genCodeTemplateString, genCodeFilePath, nameSpace, changeExtension, settingCodeIgnorePattern, forceAll, true, templateVars);
+                GenCodeFile(compileResult, genCodeTemplateString, genCodeFilePath, nameSpace, changeExtension, settingCodeIgnorePattern, forceAll, true, templateVars);
             }
         }
 
@@ -183,10 +214,7 @@ namespace TableML.Compiler
             var copyExt = new HashSet<string>() { ".txt" };
             if (Directory.Exists(sourcePath) == false)
             {
-#if UNITY_5_3_OR_NEWER
-
-#endif
-                Console.WriteLine("Error! {0} 路径不存在！{0}", sourcePath);
+                Console.WriteLine("Error! {0} 路径不存在！", sourcePath);
                 return results;
             }
             var findDir = sourcePath;
@@ -211,6 +239,8 @@ namespace TableML.Compiler
                          * NOTE 开始编译Excel 成 tml文件
                          * 每编译一个Excel就生成一个代码文件
                         */
+                        //NOTE 设置编译后文件的文件名(tml文件名)
+                        relativePath = SimpleExcelFile.GetOutFileName(excelPath);
                         var compileToPath = string.Format("{0}/{1}", compileBaseDir,
                             Path.ChangeExtension(relativePath, changeExtension));
                         var srcFileInfo = new FileInfo(excelPath);
@@ -242,7 +272,7 @@ namespace TableML.Compiler
                             var compiledFileInfo = new FileInfo(compileToPath);
                             compiledFileInfo.LastWriteTime = srcFileInfo.LastWriteTime;
                             //仅仅是生成单个Class，只需要当前的CompileResult
-                            GenSingleClass(compileResult, genCodeTemplateString, genCodeFilePath, nameSpace, changeExtension, settingCodeIgnorePattern, forceAll);
+                            GenCodeFile(compileResult, genCodeTemplateString, genCodeFilePath, nameSpace, changeExtension, settingCodeIgnorePattern, forceAll);
 
                         }
                     }

@@ -24,7 +24,7 @@ namespace TableML.Compiler
 
         public string PrimaryKey { get; set; }
         public ITableSourceFile ExcelFile { get; internal set; }
-
+        public string TabFileNames { get { return ExcelFile.ExcelFileName; } }
         public TableCompileResult()
         {
             FieldsInternal = new List<TableColumnVars>();
