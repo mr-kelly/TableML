@@ -39,7 +39,14 @@ namespace TableML.Compiler
             Index2ColName = new Dictionary<int, string>();
             ColName2Statement = new Dictionary<string, string>();
             ColName2Comment = new Dictionary<string, string>();
-            ParseTsv(filePath);
+            try
+            {
+                ParseTsv(filePath);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Error TSV File: " + filePath + " / " + e.Message);
+            }
         }
 
         private void ParseTsv(string filePath)

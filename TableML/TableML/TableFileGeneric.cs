@@ -13,7 +13,7 @@ namespace TableML
     /// 表格读取的核心基础类，可以设置泛型
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public partial class TableFile<T> : IDisposable, IEnumerable<TableFileRow> where T : TableFileRow
+    public partial class TableFile<T> : IDisposable, IEnumerable<TableFileRow> where T : TableFileRow, new()
     {
         private readonly TableFileConfig _config;
 
@@ -178,7 +178,8 @@ namespace TableML
 
                     TabInfo[_rowIndex] = splitString1;
 
-                    T newT = (T)Activator.CreateInstance(typeof(T), _rowIndex, Headers);  // the New Object may not be used this time, so cache it!
+                    T newT = new T();// prevent IL2CPP stripping!
+                    newT.Ctor(_rowIndex, Headers);  // the New Object may not be used this time, so cache it!
 
                     newT.Values = splitString1;
 
